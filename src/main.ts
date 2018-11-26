@@ -2,14 +2,17 @@
 class Main {
 
     private mFrameLoop: any = undefined;
-    private
     constructor() {
         //初始化微信小游戏
         //Laya.MiniAdpter.init();
+        this.init();
+    }
 
-        //程序入口
+    //程序入口
+    init() {
+
         //初始化引擎
-        Application.Instance.init(414, 736);
+        App.Instance.init();
         UI.Instance.init();
         Logic.Instance.init();
 
@@ -18,9 +21,13 @@ class Main {
 
     }
 
+    unInit() {
+        //Engine.destoryEngine();
+    }
+
     private frameLoop() {
 
-        Application.Instance.update(0.1);
+        App.Instance.update(0.1);
         UI.Instance.init();
         Logic.Instance.init();
 

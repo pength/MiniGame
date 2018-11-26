@@ -1,22 +1,26 @@
-class Application {
-    public static readonly Instance: Application = new Application();
+class App {
+    public static readonly Instance: App = new App();
 
     private mScene: THREE.Scene = undefined;
-    private mCamera: THREE.PerspectiveCamera = undefined;
+   
     private mRender: THREE.WebGLRenderer = undefined;
     private mOrbitControls: THREE.OrbitControls = undefined;
     private mLight: THREE.HemisphereLight = undefined;
-
+    private gltfLoader = undefined;
 
     private mWidth: number = 1024;
     private mHeight: number = 768;
     private mAspect: number = 1.33;
 
+    private mmixer: THREE.AnimationMixer = undefined;
+    private clock = new THREE.Clock();
+
     public init(width?: number, height?: number) {
+        this.gltfLoader = new THREE.GLTFLoader();
+
 
         this.mScene = new THREE.Scene();
-        this.mCamera = new THREE.PerspectiveCamera(75, this.mAspect, 0.1, 1000);
-        this.mCamera.position.set(-1.8, 0.9, 2.7);
+
 
         this.mRender = new THREE.WebGLRenderer();
 
@@ -39,17 +43,17 @@ class Application {
         ]);
         this.mScene.background = envMap;
 
-        let loader = new THREE.GLTFLoader();
+
         // loader.load("/out/res/boss/anyelieshou/scene.gltf", this.onLoaded.bind(this));
         // loader.load("/out/res/boss/jijia/scene.gltf", this.onLoaded.bind(this));
         // loader.load("/out/res/boss/wushi/scene.gltf", this.onLoaded.bind(this));
-        loader.load("./res/player/nanzhu/mota_p01.gltf", this.onLoaded.bind(this));
+        this.gltfLoader.load("./res/player/jjia/mota_b_jiqiguaishou_001.gltf", this.onLoaded.bind(this));
 
         // loader.load("/out/res/npc/tiejiang/scene.gltf", this.onLoaded.bind(this));
 
         // loader.load("/out/res/player/scene.gltf", this.onLoaded.bind(this));
 
-        loader.load("./res/scene/scene.gltf", this.onLoaded.bind(this));
+        //loader.load("./res/scene/scene.gltf", this.onLoaded.bind(this));
 
         window.addEventListener('resize', this.onWindowResize.bind(this), false);
     }
@@ -76,11 +80,25 @@ class Application {
     private onLoaded(gltf) {
         let obj = gltf.scene as THREE.Object3D;
 
+        let animations = gltf.animations;
+        if (animations && animations.length) {
+            this.mmixer = new THREE.AnimationMixer(obj);
+            let animtionClip:THREE.AnimationClip = animations[0];
+
+            animtionClip.trim()
+            
+
+            let action = this.mmixer.clipAction(animations[0]);
+            action.play();
+        }
+
         this.mScene.add(obj);
     }
 
     public update(fDeltaTime: number) {
         this.mOrbitControls.update();
+        if (this.mmixer) this.mmixer.update(this.clock.getDelta());
         this.mRender.render(this.mScene, this.mCamera);
     }
+
 }

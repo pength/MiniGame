@@ -24,17 +24,47 @@
         ERQL_END = 10,
     };
 
+    export enum ComponentType {
+        CT_DEFAULT = 0,  //空 什么都没有
+
+        CT_TRANSFORM,
+        CT_CAMERA,
+        CT_LEVEL,
+        CT_ANIMATION,
+        CT_SKILL,
+        CT_EFFECT,
+        CT_LOCATOR,
+        CT_MESH,
+        CT_SHADER,
+
+        CT_END     //结束类型
+    }
+
     //对象类型
     export enum ObjectType {
         OT_DEFAULT = 0,
         OT_DUMMY = OT_DEFAULT, //默认
+
         OT_STATIC,             //静态物件
         OT_DYNAMIC,            //动态物件
         OT_SKILL,              //技能
         OT_EFFECT,             //特效
         OT_AUDIO,              //声音
+
         OT_END,
     };
+    export let ObjectTypeString = [
+        "ot_default",
+
+        "ot_dummy",
+        "ot_static",
+        "ot_dynamic",
+        "ot_skill",
+        "ot_effect",
+        "ot_audio",
+
+        "ot_end"
+    ];
 
     //坐标
     export enum AxisType {
@@ -45,7 +75,7 @@
         EXT_END,
     };
 
-    export enum CharacterPart  {
+    export enum CharacterPart {
         CP_DEFAULT,
         CP_LEFT_WEAPON,
         CP_RIGHT_WEAPON,

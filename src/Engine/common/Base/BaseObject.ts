@@ -1,32 +1,35 @@
-/**
- * 
- */
 module Engine {
 
     //对象ID
     let objectID: number = -28473647;
-    /*-----------------------------------------------------------------------------------------
-                                                    基础对象
-    -----------------------------------------------------------------------------------------*/
-    export class BaseObject {
+    export class BaseObject implements IObject {
 
-        private hashCode: number = 0;
+        private id: number = 0;
         protected objectType: ObjectType = ObjectType.OT_DEFAULT;
         private mData: any = undefined;
         private mLayer: number = 0;
         private mActive: boolean = true;
 
+        /*---------------------------------------------------------------------------------------
+        |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   
+        ---------------------------------------------------------------------------------------*/
         //哈希值,类对象的唯一标识
-        public HashCode(): number {
+        public ID(): number {
 
-            this.hashCode = objectID++;
-            return this.hashCode;
+            if (this.id == 0)
+                this.id = objectID++;
+
+            return this.id;
         }
 
         //类的类型
         public Type(): ObjectType {
 
             return this.objectType;
+        }
+        public TypeString(): String {
+
+            return ObjectTypeString[this.objectType];
         }
 
         //外部数据设置，只是一个外部数据保存的媒介
@@ -63,6 +66,6 @@ module Engine {
 
             return this.mActive;
         }
-
     }
+
 }
