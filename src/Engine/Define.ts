@@ -1,4 +1,4 @@
-﻿module Engine {
+﻿module MeltEngine {
 
     //射线
     export class Ray {
@@ -44,7 +44,9 @@
     export enum ObjectType {
         OT_DEFAULT = 0,
         OT_DUMMY = OT_DEFAULT, //默认
-
+        OT_CAMERA,
+        OT_LEVEL,
+        
         OT_STATIC,             //静态物件
         OT_DYNAMIC,            //动态物件
         OT_SKILL,              //技能
@@ -55,6 +57,8 @@
     };
     export let ObjectTypeString = [
         "ot_default",
+        "ot_camera",
+        "ot_level",
 
         "ot_dummy",
         "ot_static",

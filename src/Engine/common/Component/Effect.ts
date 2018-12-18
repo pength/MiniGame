@@ -1,4 +1,4 @@
-module Engine {
+module MeltEngine {
 
     export class Effect extends Component {
     }

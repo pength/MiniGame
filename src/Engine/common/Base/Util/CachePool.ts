@@ -1,4 +1,4 @@
-module Engine {
+module MeltEngine {
 
     export enum CacheType {
         CT_CLASS = 0,
@@ -75,7 +75,7 @@ module Engine {
             if (cachePool == undefined)
                 cachePool = this.registCachePool(sign);
 
-            cachePool.time = Laya.timer.currTimer;
+            //cachePool.time = Laya.timer.currTimer;
             if (type != undefined)
                 cachePool.type = type;
 
@@ -139,14 +139,14 @@ module Engine {
 
             for (let k in this.mCachePool) {
                 let cachePool = this.mCachePool[k];
-                let _time = Laya.timer.currTimer - cachePool.time;
-                if (_time > 3 * 60 * 1000 &&
-                    cachePool.usingCount == 0) {//没有使用缓存池里的对象
+                // let _time = Laya.timer.currTimer - cachePool.time;
+                // if (_time > 3 * 60 * 1000 &&
+                //     cachePool.usingCount == 0) {//没有使用缓存池里的对象
 
 
-                    Pool.clearBySign(k);
-                    cachePool.reset();
-                }
+                //     Pool.clearBySign(k);
+                //     cachePool.reset();
+                // }
             }
         }
     }

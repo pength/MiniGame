@@ -1,4 +1,4 @@
-module Engine {
+module MeltEngine {
 
     export interface IObject {
 
@@ -10,7 +10,7 @@ module Engine {
 
         //类的类型
         Type(): ObjectType;
-        TypeString(): String;
+        TypeString(): string;
 
         //外部数据设置，只是一个外部数据保存的媒介
         SetData(dwData: any): void;
@@ -49,11 +49,11 @@ module Engine {
         |   |   |   |   |   |   |   |   |   对象
         -----------------------------------------------------------------------------------------*/
         //创建对象.
-        CreateObject(type: ObjectType): IObject;
+        CreateObject(type: ObjectType): IGameObject;
         //删除对象.
-        DestroyObject(pNode: IObject): void;
+        DestroyObject(pNode: IGameObject): void;
         //查询Erath 对象
-        GetHitObject(screenX: number, screenY: number, uiSelect?: boolean): IObject;
+        GetHitObject(screenX: number, screenY: number, uiSelect?: boolean): IGameObject;
 
         /*-----------------------------------------------------------------------------------------
         |   |   |   |   |   |   |   |   |   管理对象
@@ -143,104 +143,95 @@ module Engine {
         //播放音效
         PlaySound(url: string, volume: number, followDevice?: boolean): void;
     }
-    
+
     /*-------------------------------------------------------------------------------------------
     |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
     -------------------------------------------------------------------------------------------*/
     export interface IGameObject extends IObject {
-        
-    //     /*-----------------------------------------------------------------------------------------
-    //    |   |   |   |   |   |   |   |   |   加载资源
-    //    -----------------------------------------------------------------------------------------*/
-    //     //加载资源
-    //     Load(url: string): void;
-    //     //异步加载是否完成
-    //     OnLoadAsyncEnd(): boolean;
+        Init();
+        UnInit();
+        //     /*-----------------------------------------------------------------------------------------
+        //    |   |   |   |   |   |   |   |   |   加载资源
+        //    -----------------------------------------------------------------------------------------*/
+        //     //加载资源
+        //     Load(url: string): void;
+        //     //异步加载是否完成
+        //     OnLoadAsyncEnd(): boolean;
 
-    //     /*-----------------------------------------------------------------------------------------
-    //     |   |   |   |   |   |   |   |   |   Transform
-    //     -----------------------------------------------------------------------------------------*/
-    //     //设置对象的移动距离
-    //     Translate(x: number, y: number, z: number): void;
-    //     //设置对象的位置
-    //     SetPosition(x: number, y: number, z: number): void;
-    //     //获取对象的坐标,值为引擎坐标
-    //     GetPosition(): Vector3;
-    //     //设置该对象的旋转，欧拉角
-    //     SetRotation(vRotateX: number, vRotateY: number, vRotateZ: number): void;
-    //     GetRotation(): Vector3;
-    //     //设置对象的缩放
-    //     SetScale(x: number, y: number, z: number, fTime?: number): void;
-    //     GetScale(): Vector3;
+        //     /*-----------------------------------------------------------------------------------------
+        //     |   |   |   |   |   |   |   |   |   Transform
+        //     -----------------------------------------------------------------------------------------*/
+        //     //设置对象的移动距离
+        //     Translate(x: number, y: number, z: number): void;
+        //     //设置对象的位置
+        //     SetPosition(x: number, y: number, z: number): void;
+        //     //获取对象的坐标,值为引擎坐标
+        //     GetPosition(): Vector3;
+        //     //设置该对象的旋转，欧拉角
+        //     SetRotation(vRotateX: number, vRotateY: number, vRotateZ: number): void;
+        //     GetRotation(): Vector3;
+        //     //设置对象的缩放
+        //     SetScale(x: number, y: number, z: number, fTime?: number): void;
+        //     GetScale(): Vector3;
 
-    //     /*-----------------------------------------------------------------------------------------
-    //     |   |   |   |   |   |   |   |   |   鼠标选中
-    //     -----------------------------------------------------------------------------------------*/
-    //     //设置是否可以被查询到
-    //     SetRayQuery(bQuery: boolean): void;
-    //     //获取是否可以被查询到
-    //     GetRayQuery(): boolean;
-    //     //设置查询等级
-    //     SetRayQueryLevel(nLevel: RayQueryLevel): void;
-    //     //获取查询等级
-    //     GetRayQueryLevel(): RayQueryLevel;
+        //     /*-----------------------------------------------------------------------------------------
+        //     |   |   |   |   |   |   |   |   |   鼠标选中
+        //     -----------------------------------------------------------------------------------------*/
+        //     //设置是否可以被查询到
+        //     SetRayQuery(bQuery: boolean): void;
+        //     //获取是否可以被查询到
+        //     GetRayQuery(): boolean;
+        //     //设置查询等级
+        //     SetRayQueryLevel(nLevel: RayQueryLevel): void;
+        //     //获取查询等级
+        //     GetRayQueryLevel(): RayQueryLevel;
 
-    //     /*-----------------------------------------------------------------------------------------
-    //     |   |   |   |   |   |   |   |   |   绑定对象
-    //     -----------------------------------------------------------------------------------------*/
-    //     //绑定对象
-    //     AttachObject(pObject: IObject, szBindName: string, bRot?: boolean): void;
-    //     //解除绑定，但是不会删除对象，需要自己手动删除
-    //     DetachObject(pObject: IObject): void;
+        //     /*-----------------------------------------------------------------------------------------
+        //     |   |   |   |   |   |   |   |   |   绑定对象
+        //     -----------------------------------------------------------------------------------------*/
+        //     //绑定对象
+        //     AttachObject(pObject: IObject, szBindName: string, bRot?: boolean): void;
+        //     //解除绑定，但是不会删除对象，需要自己手动删除
+        //     DetachObject(pObject: IObject): void;
 
-    //     //获取绑定点位置
-    //     GetLocator(szName: string, fvPosition: Vector3): void;
-    //     //取得"头顶点"在屏幕上的位置,如果返回false，表示在屏幕之外,或者没有该点
-    //     GetLocatorScreenPoint(locator: string, pvObjPos: Vector3, fObligeHeight?: number): boolean;
+        //     //获取绑定点位置
+        //     GetLocator(szName: string, fvPosition: Vector3): void;
+        //     //取得"头顶点"在屏幕上的位置,如果返回false，表示在屏幕之外,或者没有该点
+        //     GetLocatorScreenPoint(locator: string, pvObjPos: Vector3, fObligeHeight?: number): boolean;
 
-    //     //改变动画的播放速度
-    //     ChangeActionRate(fAniRate: number): void;
-    //     //设置默认播放动画
-    //     SetDefaultAnim(aniName?: string): void;
+        //     //改变动画的播放速度
+        //     ChangeActionRate(fAniRate: number): void;
+        //     //设置默认播放动画
+        //     SetDefaultAnim(aniName?: string): void;
 
-    //     /*-----------------------------------------------------------------------------------------
-    //     |   |   |   |   |   |   |   |   |   特殊效果
-    //     -----------------------------------------------------------------------------------------*/
-    //     //淡入 
-    //     FadeIn(fTime: number): void;
-    //     //淡出
-    //     FadeOut(fTime: number): void;
+        //     /*-----------------------------------------------------------------------------------------
+        //     |   |   |   |   |   |   |   |   |   特殊效果
+        //     -----------------------------------------------------------------------------------------*/
+        //     //淡入 
+        //     FadeIn(fTime: number): void;
+        //     //淡出
+        //     FadeOut(fTime: number): void;
 
-    //     //设置被鼠标选中状态
-    //     SetMouseHover(bHover: boolean, vColor: Vector3, crisperdingWidth?: number): void;
-    //     //设置被击中的颜色
-    //     SetHitColor(vColor: Vector3, fTime?: number): void
-    //     //设置边缘光颜色
-    //     SetEdgeColor(vColor: Vector3, fTime: number, power?: number): void;
+        //     //设置被鼠标选中状态
+        //     SetMouseHover(bHover: boolean, vColor: Vector3, crisperdingWidth?: number): void;
+        //     //设置被击中的颜色
+        //     SetHitColor(vColor: Vector3, fTime?: number): void
+        //     //设置边缘光颜色
+        //     SetEdgeColor(vColor: Vector3, fTime: number, power?: number): void;
 
-    //     //改变颜色
-    //     ChangeColor(_cp: CharacterPart, r: number, g: number, b: number, power?: number): void;
-    //     //改变部件
-    //     ChangePart(_cp: CharacterPart, _cp_url: string, textUrl: string): void;
+        //     //改变颜色
+        //     ChangeColor(_cp: CharacterPart, r: number, g: number, b: number, power?: number): void;
+        //     //改变部件
+        //     ChangePart(_cp: CharacterPart, _cp_url: string, textUrl: string): void;
     }
-
 
     /*-------------------------------------------------------------------------------------------
     |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
     -------------------------------------------------------------------------------------------*/
-    let g_Engine: IApplication = undefined;
-    function createEngine() {
-
-        if (g_Engine == undefined)
-            //g_Engine = new Application();
-        g_Engine.Init();
+    export function Engine_Init(): IApplication {
+        return undefined;
     }
 
-    function destoryEngine() {
-        if (g_Engine != undefined) {
-            g_Engine.UnInit();
-            g_Engine = undefined;
-        }
+    export function Engine_UnInit(app: IApplication) {
     }
-
 }

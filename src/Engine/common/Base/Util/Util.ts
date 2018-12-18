@@ -1,5 +1,5 @@
 
-module Engine {
+module MeltEngine {
 
     export class Util {
 
@@ -54,7 +54,7 @@ console.log = (function (logFunc) {
 
     return function (str) {
 
-        logFunc.call(console, Engine.Util.getDate("Info:") + str);
+        logFunc.call(console, MeltEngine.Util.getDate("Info:") + str);
     }
 
 })(console.log);
@@ -64,7 +64,7 @@ console.warn = (function (logFunc) {
 
     return function (str) {
 
-        logFunc.call(console, Engine.Util.getDate("Waring:") + str);
+        logFunc.call(console, MeltEngine.Util.getDate("Waring:") + str);
     }
 
 })(console.warn);
@@ -74,7 +74,7 @@ console.error = (function (logFunc) {
 
     return function (str) {
 
-        logFunc.call(console, Engine.Util.getDate("Error:") + str);
+        logFunc.call(console, MeltEngine.Util.getDate("Error:") + str);
     }
 
 })(console.error);

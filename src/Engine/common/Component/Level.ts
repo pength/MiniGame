@@ -1,4 +1,4 @@
-module Engine {
+module MeltEngine {
 
     export class Level extends Component {
         //播放场景动画

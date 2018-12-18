@@ -1,4 +1,4 @@
-module Engine {
+module MeltEngine {
     class CameraShakeParam {
         constructor() {
 
@@ -11,13 +11,15 @@ module Engine {
     }
     export class Camera extends Component {
 
-        private mLookAt: Vector3 = new Vector3();
-        private mDistance: number = 0;
-        private mPitch: number = 0;
-        private mDirection: number = 0;
-        private mFov: number = 0;
-        private mAspect: number = 0;
-        private mPosition: Vector3 = new Vector3();
+        protected mLookAt: Vector3 = new Vector3();
+        protected mDistance: number = 10;
+        protected mPitch: number = 0;
+        protected mDirection: number = 0;
+        protected mFov: number = 45;
+        protected mAspect: number = 0;
+        protected mPosition: Vector3 = new Vector3();
+
+        constructor() { super(); }
 
         //摄像头看的位置,看的目标点
         SetLookAt(fX: number, fY: number, fZ: number): void {
