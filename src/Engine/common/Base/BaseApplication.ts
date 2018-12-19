@@ -1,7 +1,7 @@
 
 module MeltEngine {
 
-    export class Application extends BaseObject implements IApplication {
+    export class BaseApplication extends BaseObject implements IApplication {
 
         protected mCamera: Camera = undefined;
         protected mCameraObject: GameObject = undefined;

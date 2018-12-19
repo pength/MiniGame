@@ -10,12 +10,11 @@ module MeltEngine {
      * @extends {BaseObject}
      */
     export class LocalObject extends BaseObject {
-
         //所有组件
         private components: Array<any> = new Array<any>();
 
         public constructor() { super(); }
-                                                                                                                                                                                                                         
+
         /**
          * 更新所有组件
          * @memberof LocalObject
@@ -23,7 +22,7 @@ module MeltEngine {
         Update() {
 
             for (let i = 0, len = this.components.length; i < len; i++) {
-                this.components[i].update();
+                this.components[i].Update();
             }
 
         }
@@ -44,14 +43,15 @@ module MeltEngine {
 
             let obj: T = this.GetComponent<T>();
             if (obj != undefined && obj.isSingleton() == true) {
+                console.warn(obj.TypeString + " is single component.")
                 return undefined;
             }
 
+            //组件缓存
             let coObj = CachePool.Instance.createObject("", clas, CacheType.CT_CLASS);
             this.components.push(coObj);
 
             return coObj;
-
         }
 
         /**
@@ -69,6 +69,13 @@ module MeltEngine {
                 return undefined;
             }
 
+            let obj: Component = this.GetComponentByType(ct);
+            if (obj != undefined && obj.isSingleton() == true) {
+                console.warn(obj.TypeString + " is single component.")
+                return undefined;
+            }
+
+            //组件缓存
             let coObj = CachePool.Instance.createObject(ct.toString(), clas, CacheType.CT_CLASS);
             this.components.push(coObj);
 
@@ -93,7 +100,6 @@ module MeltEngine {
             else {
                 console.error("Delete the obj is not Component " + obj + ". type " + obj.TypeString());
             }
-
         }
 
         /**

@@ -1,15 +1,15 @@
 module MeltEngine {
 
-    //对象ID
-    let objectID: number = 1;
-
     export class GameObject extends LocalObject implements IGameObject {
-        Init() {
 
-        }
-        UnInit() {
-
-        }
+        /**
+         * 位移组件
+         * @type {Transform}
+         * @memberof GameObject
+         */
+        public transform:Transform = undefined;
+        
+        public constructor() { super(); }
 
         /**
          * 删除对象
