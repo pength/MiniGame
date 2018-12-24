@@ -14,14 +14,17 @@ module MeltEngine {
      * @class BaseObject
      * @implements {IObject}
      */
-    export class BaseObject implements IObject {
+    export class BaseObject {
 
         private id: number = 0;
         private data: any = undefined;
         private layer: number = 0;
         private active: boolean = true;
-        private name: string = "";
+
+        protected tag: string = "";
         protected objectType: ObjectType = ObjectType.OT_DEFAULT;
+
+        public name: string = "";
 
         /*---------------------------------------------------------------------------------------
         |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   
@@ -34,6 +37,7 @@ module MeltEngine {
         public SetName(name: string) {
             this.name = name;
         }
+
         /**
          * 获取名字
          * @returns {string} 
@@ -66,6 +70,7 @@ module MeltEngine {
 
             return this.objectType;
         }
+
         /**
          * 类型对应的字符串
          * @returns {string} 
@@ -78,7 +83,6 @@ module MeltEngine {
 
         /**
          * 外部数据设置，只是一个外部数据保存的媒介
-         * 
          * @param {*} dwData 
          * @memberof BaseObject
          */
@@ -106,6 +110,7 @@ module MeltEngine {
 
             this.layer = layer;
         }
+
         /**
          * 获取SetLayer 设置的层级
          * @returns {number} 
@@ -115,6 +120,7 @@ module MeltEngine {
 
             return this.layer;
         }
+
         /**
          * 设置该对象是否激活
          * @param {boolean} bActive 
@@ -131,8 +137,25 @@ module MeltEngine {
          * @memberof BaseObject
          */
         IsActive(): boolean {
-
             return this.active;
+        }
+
+        /**
+         * 设置标签
+         * @param {string} _tag 
+         * @memberof BaseObject
+         */
+        SetTag(_tag: string) {
+            this.tag = _tag;
+        }
+
+        /**
+         * 获取标签 
+         * @returns {string} 
+         * @memberof BaseObject
+         */
+        GetTag(): string {
+            return this.tag;
         }
     }
 }

@@ -1,50 +1,54 @@
 module MeltEngine {
 
-    export class Level extends Component {
-        //播放场景动画
-        PlaySceneAnim(szAniName: string, bLoop: boolean): boolean {
-            return false;
+    /**
+     * 场景管理
+     * @export
+     * @class BaseLevel
+     */
+    export class BaseLevel extends LocalObject {
+
+        /**
+         * 加载完毕
+         * @type {Function}
+         * @memberof BaseLevel
+         */
+        public onLoad: Function = undefined;
+
+        /**
+         * 加载中
+         * 参数百分比 0 - 100
+         * @type {Function}
+         * @memberof BaseLevel
+         */
+        public onLoading: Function = undefined;
+
+        private oldLevelName: string = ""; //创建过的场景
+        private loaded: boolean = false;
+
+        /**
+         * 异步创建场景
+         * 重复场景加载,同一场景不会重复加载
+         * @param {string} level_path 
+         * @memberof BaseLevel
+         */
+        createScene(level_path: string) {
+
+            //同一张场景重复加载
+            if (this.oldLevelName == level_path) {
+
+                //如果加载完毕直接回掉
+                if (this.loaded == true && this.onLoad != undefined) {
+                    this.onLoad();
+                }
+
+                //没有加载完毕不做处理
+                return;
+            }
+
+            this.oldLevelName = level_path;
         }
 
-        //加载场景
-        Load(level_url: string, preloadRes?: string[]): boolean {
-            return false;
-        }
-        //场景加载完毕
-        OnLoadEnd() {
 
-        }
-        //卸载场景
-        Unload(): void {
 
-        }
-
-        //加载逻辑场景,不是异步加载
-        LoadLevelLogic(): boolean {
-            return false;
-        }
-
-        //获取地形的高度
-        GetTerrainHeight(x: number, y: number): number {
-            return 0;
-        }
-
-        //是否在trap 中
-        InTrap(x: number, y: number): boolean {
-            return false;
-        }
-        //trap是否触发 引擎内部逻辑处理
-        TrapTrigger(begin: boolean): void {
-
-        }
-        //是否在障碍中
-        Inobstacle(x: number, y: number): boolean {
-            return false;
-        }
-
-        //雾效设置
-        SetFog(enable: boolean, r: number, g: number, b: number, i: number, fTime?: number): void {
-
-        }
     }
 }

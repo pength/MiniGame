@@ -1,15 +1,26 @@
 module MeltEngine {
+
+    /**
+     * 震屏
+     * @class CameraShakeParam
+     */
     class CameraShakeParam {
-        constructor() {
 
-        }
+        constructor() { }
 
-        fMaxBiasY: number;
-        fMinBiasY: number;
-        fBiasStep: number;
-        nTimes: number;
+        public fMaxBiasY: number;
+        public fMinBiasY: number;
+        public fBiasStep: number;
+        public nTimes: number;
     }
-    export class Camera extends Component {
+
+    /**
+     * 摄像头基础控制
+     * @export
+     * @class BaseCamera
+     * @extends {Component}
+     */
+    export class BaseCamera extends Component {
 
         protected mLookAt: Vector3 = new Vector3();
         protected mDistance: number = 10;
@@ -94,6 +105,7 @@ module MeltEngine {
         }
 
         UpdateCameraShake() {
+
             if (!this.mStartVib)
                 return;
 
@@ -125,7 +137,7 @@ module MeltEngine {
             this.mPosition.y += this.m_fCurBias;
         }
 
-        update() {
+        Update() {
 
             if (this.IsActive() == false)
                 return;
@@ -140,9 +152,7 @@ module MeltEngine {
             this.mPosition.z = this.mLookAt.z + z;
 
             this.UpdateCameraShake();
-
         }
-
 
     }
 }

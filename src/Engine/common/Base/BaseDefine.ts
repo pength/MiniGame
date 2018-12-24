@@ -1,76 +1,62 @@
 ﻿module MeltEngine {
 
-    //射线
-    export class Ray {
-        public mOrigin: Vector3;
-        public mDirection: Vector3;
-    };
-
-    //射线查询优先级
-    export enum RayQueryLevel {
-        RQL_BEGIN = 0,
-        RQL_UNKNOWN = RQL_BEGIN,
-
-        RQL_ITEMBOX = 1,
-        RQL_ENEMY_PLAYER = 2,
-        RQL_ENEMY_NPC = 3,
-        RQL_PLATFORM = 4,
-        RQL_ALLY_NPC = 5,
-        RQL_ALLY_PLAYER = 6,
-        RQL_PET = 7,
-        RQL_CORPSE = 8,
-        RQL_PLAYER_SELF = 9,
-
-        ERQL_END = 10,
-    };
-
-    export enum ComponentType {
-        CT_DEFAULT = 0,  //空 什么都没有
-
-        CT_TRANSFORM,
-        CT_CAMERA,
-        CT_LEVEL,
-        CT_ANIMATION,
-        CT_SKILL,
-        CT_EFFECT,
-        CT_LOCATOR,
-        CT_MESH,
-        CT_SHADER,
-
-        CT_END     //结束类型
-    }
-
-    //对象类型
+    /*---------------------------------------------------------------------------------------
+    |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   
+    ---------------------------------------------------------------------------------------*/
+    /**
+     * 对象类型
+     * 每添加一个组件类(继承Component), 需要在此添加相应的类型
+     * @export
+     * @enum {number}
+     */
     export enum ObjectType {
-        OT_DEFAULT = 0,
-        OT_DUMMY = OT_DEFAULT, //默认
-        OT_CAMERA,
-        OT_LEVEL,
-        
-        OT_STATIC,             //静态物件
-        OT_DYNAMIC,            //动态物件
-        OT_SKILL,              //技能
-        OT_EFFECT,             //特效
-        OT_AUDIO,              //声音
+        OT_DEFAULT = 0,             //空
+        OT_TRANSFORM = OT_DEFAULT,  //位移
+        OT_CAMERA,                  //摄像机
 
-        OT_END,
+
+        OT_END,                     //结束
     };
-    export let ObjectTypeString = [
-        "ot_default",
-        "ot_camera",
-        "ot_level",
 
-        "ot_dummy",
-        "ot_static",
-        "ot_dynamic",
-        "ot_skill",
-        "ot_effect",
-        "ot_audio",
+    /**
+     * 对象类型的字符串
+     * 每个类型对应的字符串,不可以重复,顺序必须和ObjectType一样
+     * 用于对象缓存,日志报错等
+     * 
+     * 如果对象是继承基类的,需要修改对应的字符串
+     */
+    export let ObjectTypeString = [
+        "ot_transform",
+        "ot_camera",
+
 
         "ot_end"
     ];
 
-    //坐标
+    /**
+     * 对象名
+     * 每个类型对应的类名,不可以重复,顺序必须和ObjectType一样
+     * 用于根据对象类型,创建对象
+     * 
+     * 如果对象是继承基类的,需要修改对应的类名
+     */
+    export let ObjectTypeClass =
+        [
+            Transform,
+            BaseCamera,
+
+
+            undefined
+        ];
+
+    /*---------------------------------------------------------------------------------------
+    |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   
+    ---------------------------------------------------------------------------------------*/
+    /**
+     * 坐标类型
+     * @export
+     * @enum {number}
+     */
     export enum AxisType {
         EXT_DEFAULT = 0,
         EXT_GAME,
@@ -79,15 +65,23 @@
         EXT_END,
     };
 
+    /**
+     * 角色部件 
+     * @export
+     * @enum {number}
+     */
     export enum CharacterPart {
-        CP_DEFAULT,
-        CP_LEFT_WEAPON,
-        CP_RIGHT_WEAPON,
+        CP_DEFAULT = 0,     //默认对象 不可切换任何部件
+        CP_LEFT_WEAPON,     //左手武器
+        CP_RIGHT_WEAPON,    //右手武器
+
         CP_HAIR,
         CP_BODY,
         CP_FACE,
 
         CP_END
     };
+
+
 
 }

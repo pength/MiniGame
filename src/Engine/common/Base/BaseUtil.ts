@@ -1,6 +1,11 @@
 
 module MeltEngine {
 
+    /**
+     * 工具类
+     * @export
+     * @class Util
+     */
     export class Util {
 
         static _hashcode(str: string): number {
@@ -39,17 +44,36 @@ module MeltEngine {
             return false;
         }
 
-
         //坐标转换
         AxisTrans(typeSource: AxisType, fvSource: Vector3, typeTar: AxisType, fvTarget: Vector3): boolean {
+
             return false;
         }
 
+        //查询Erath 对象
+        GetHitObject(screenX: number, screenY: number, uiSelect?: boolean): GameObject {
+
+            return undefined;
+        }
     }
 
+    /**
+     * 射线 
+     * @export
+     * @class Ray
+     */
+    export class Ray {
+        public mOrigin: Vector3;
+        public mDirection: Vector3;
+    };
 }
 
-//重写日志
+/*---------------------------------------------------------------------------------------
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   
+---------------------------------------------------------------------------------------*/
+/**
+* 重写日志
+*/
 console.log = (function (logFunc) {
 
     return function (str) {
@@ -59,7 +83,9 @@ console.log = (function (logFunc) {
 
 })(console.log);
 
-//重写警告
+/**
+ * 重写警告
+ */
 console.warn = (function (logFunc) {
 
     return function (str) {
@@ -69,7 +95,9 @@ console.warn = (function (logFunc) {
 
 })(console.warn);
 
-//重写错误
+/**
+ * 重写错误
+ */
 console.error = (function (logFunc) {
 
     return function (str) {
@@ -78,3 +106,8 @@ console.error = (function (logFunc) {
     }
 
 })(console.error);
+
+/*---------------------------------------------------------------------------------------
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   
+---------------------------------------------------------------------------------------*/
+

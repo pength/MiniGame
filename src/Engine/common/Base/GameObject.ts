@@ -1,35 +1,151 @@
 module MeltEngine {
 
-    export class GameObject extends LocalObject implements IGameObject {
+    export class GameObject extends LocalObject {
+        
+        /*-----------------------------------------------------------------------------------------
+        |   |   |   |   |   |   |   |   |   静态方法
+        -----------------------------------------------------------------------------------------*/
+        private static mGameObjects: Array<GameObject> = new Array<GameObject>();
 
+        /**
+         * 创建对象
+         * 有缓存管理
+         * @static
+         * @param {ObjectType} type 
+         * @returns {GameObject} 
+         * @memberof GameObject
+         */
+        public static CreateObject(type: ObjectType): GameObject {
+
+            let gameObj: GameObject = CachePool.Instance.createObject(ObjectTypeString[type], GameObject, CacheType.CT_CLASS) as GameObject;
+            if (gameObj == undefined) {
+                console.error("创建对象 " + ObjectTypeString[type] + "失败.");
+                return undefined;
+            }
+
+            gameObj.transform = gameObj.GetComponent<Transform>();
+            if (gameObj.transform == undefined)
+                gameObj.transform = gameObj.AddComponent<Transform>();
+
+            gameObj.AddComponentByType(type);
+
+            gameObj.Init();
+
+            this.mGameObjects.push(gameObj);
+
+            return gameObj;
+        }
+
+        /**
+         * 立即删除对象
+         * @static
+         * @param {GameObject} pNode 
+         * @returns {void} 
+         * @memberof GameObject
+         */
+        public static DestoryImmediate(pNode: GameObject): void {
+            if (pNode == undefined)
+                return;
+
+            let go = pNode as GameObject;
+
+            let k = this.mGameObjects.indexOf(go);
+            this.mGameObjects.splice(k, 1);
+
+            go.UnInit();
+            CachePool.Instance.destroyObject(pNode.TypeString(), go);
+            pNode = undefined;
+        }
+
+        /**
+         * 延迟删除对象
+         * @param {GameObject} baseObject 
+         * @param {number} [fTime] 
+         * @memberof BaseObject
+         */
+        public static Destory(baseObject: GameObject, fTime?: number) {
+            if (fTime <= 0)
+                GameObject.DestoryImmediate(baseObject);
+            else {
+
+                //todo
+            }
+        }
+
+        /**
+         * 根据名字获取第一个对象
+         * @static
+         * @param {string} name 
+         * @returns {GameObject} 
+         * @memberof GameObject
+         */
+        public static FindGameObject(name: string): GameObject {
+
+            for (let i = 0; i < this.mGameObjects.length; i++) {
+
+                if (this.mGameObjects[i].name == name)
+                    return this.mGameObjects[i];
+            }
+            return undefined;
+        }
+
+        /**
+         * 根据标签获取第一个对象
+         * @static
+         * @param {string} name 
+         * @returns {GameObject} 
+         * @memberof GameObject
+         */
+        public static FindGameObjectWithTag(tag: string): GameObject {
+
+            for (let i = 0; i < this.mGameObjects.length; i++) {
+
+                if (this.mGameObjects[i].GetTag() == tag)
+                    return this.mGameObjects[i];
+            }
+            return undefined;
+        }
+
+        /**
+         * 根据标签获取对象数组
+         * @static
+         * @param {string} name 
+         * @returns {GameObject[]} 
+         * @memberof GameObject
+         */
+        public static FindGameObjectsWithTag(tag: string): GameObject[] {
+
+            let gameObjects: GameObject[] = [];
+            for (let i = 0; i < this.mGameObjects.length; i++) {
+
+                if (this.mGameObjects[i].GetTag() == tag)
+                    gameObjects.push(this.mGameObjects[i]);
+            }
+            return gameObjects;
+        }
+
+        /*---------------------------------------------------------------------------------------
+        |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   
+        -----------------------------------------------------------------------------------------
         /**
          * 位移组件
          * @type {Transform}
          * @memberof GameObject
          */
-        public transform:Transform = undefined;
-        
+        public transform: Transform = undefined;
+
         public constructor() { super(); }
 
-        /**
-         * 删除对象
-         * @param {BaseObject} baseObject 
-         * @param {number} [fTime] 
-         * @memberof BaseObject
-         */
-        public static Destory(baseObject: BaseObject, fTime?: number) {
+        Init() {
 
         }
 
-        /**
-         * 立即删除对象
-         * @param {BaseObject} baseObject 
-         * @memberof BaseObject
-         */
-        public static DestoryImmediate(baseObject: BaseObject) {
-
+        UnInit() {
+            
         }
-        
+
+
+
         /*---------------------------------------------------------------------------------------
         |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   
         -----------------------------------------------------------------------------------------

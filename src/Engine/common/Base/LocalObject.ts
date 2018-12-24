@@ -15,6 +15,15 @@ module MeltEngine {
 
         public constructor() { super(); }
 
+        protected DestoryAllComponent() {
+
+            let item = this.components.pop();
+            while (item != undefined) {
+                CachePool.Instance.destroyObject(item.TypeString(), item);
+                item = this.components.pop();
+            }
+        }
+
         /**
          * 更新所有组件
          * @memberof LocalObject
@@ -56,13 +65,13 @@ module MeltEngine {
 
         /**
          * 根据类型添加组件
-         * @param {ComponentType} ct 
+         * @param {ObjectType} ct 
          * @returns {Component} 
          * @memberof LocalObject
          */
-        AddComponentByType(ct: ComponentType): Component {
+        AddComponentByType(ct: ObjectType): Component {
 
-            let clas: any = ClassUtil.getClass(ct);
+            let clas: any = ObjectTypeClass[ct];
             if (clas == undefined) {
 
                 console.error(" add type [" + ct + "] class info to RegisterClass.ts")
@@ -95,8 +104,10 @@ module MeltEngine {
                 return;
 
             let index = this.components.indexOf(obj);
-            if (index != -1)
+            if (index != -1) {
                 this.components.splice(index, 1);
+                CachePool.Instance.destroyObject(obj.TypeString(), obj);
+            }
             else {
                 console.error("Delete the obj is not Component " + obj + ". type " + obj.TypeString());
             }
@@ -113,7 +124,7 @@ module MeltEngine {
             for (let i = 0, len = this.components.length; i < len; i++) {
                 let obj = this.components[i];
                 let ct = obj.Type();
-                let _clas: any = ClassUtil.getClass(ct);
+                let _clas: any = ObjectTypeClass[ct];
                 if (_clas == clas)
                     return obj;
             }
@@ -123,11 +134,11 @@ module MeltEngine {
 
         /**
          * 根据类型获取该类型的第一个组件
-         * @param {ComponentType} ct 
+         * @param {ObjectType} ct 
          * @returns {Component} 
          * @memberof LocalObject
          */
-        GetComponentByType(ct: ComponentType): Component {
+        GetComponentByType(ct: ObjectType): Component {
 
             for (let i = 0, len = this.components.length; i < len; i++) {
                 let obj = this.components[i];
@@ -150,7 +161,7 @@ module MeltEngine {
             for (let i = 0, len = this.components.length; i < len; i++) {
                 let obj = this.components[i];
                 let ct = obj.Type();
-                let _clas: any = ClassUtil.getClass(ct);
+                let _clas: any = ObjectTypeClass[ct];
                 if (_clas == clas)
                     t.push(obj);
             }
@@ -159,11 +170,11 @@ module MeltEngine {
 
         /**
          * 根据类型获取该类型的所有组件
-         * @param {ComponentType} ct 
+         * @param {ObjectType} ct 
          * @returns {Component[]} 
          * @memberof LocalObject
          */
-        GetComponentsByType(ct: ComponentType): Component[] {
+        GetComponentsByType(ct: ObjectType): Component[] {
             let t: Component[] = [];
             for (let i = 0, len = this.components.length; i < len; i++) {
                 let obj = this.components[i];
@@ -191,7 +202,7 @@ module MeltEngine {
          * @returns {T} 
          * @memberof LocalObject
          */
-        GetComponentInChildrenByType(ct: ComponentType): Component {
+        GetComponentInChildrenByType(ct: ObjectType): Component {
             //todo
             return undefined;
         }
@@ -213,7 +224,7 @@ module MeltEngine {
          * @returns {T} 
          * @memberof LocalObject
          */
-        GetComponentsInChildrenByType(ct: ComponentType): Component[] {
+        GetComponentsInChildrenByType(ct: ObjectType): Component[] {
             //todo
             return undefined;
         }
@@ -235,7 +246,7 @@ module MeltEngine {
          * @returns {T} 
          * @memberof LocalObject
          */
-        GetComponentInParentByType(ct: ComponentType): Component {
+        GetComponentInParentByType(ct: ObjectType): Component {
             //todo
             return undefined;
         }
@@ -257,7 +268,7 @@ module MeltEngine {
          * @returns {T} 
          * @memberof LocalObject
          */
-        GetComponentsInParentByType(ct: ComponentType): Component[] {
+        GetComponentsInParentByType(ct: ObjectType): Component[] {
             //todo
             return undefined;
         }

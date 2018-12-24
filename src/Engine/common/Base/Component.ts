@@ -14,6 +14,7 @@ module MeltEngine {
         private destroyed: boolean = false;              //销毁
         private enable: boolean = false;                 //启用
         private started: boolean = false;                //是否已执行start函数。
+        
         /**
          * 是否是单列
          * @protected
@@ -33,12 +34,6 @@ module MeltEngine {
          * @memberof Component
          */
         public gameObject: GameObject = undefined;
-        /**
-         * 标签
-         * @type {string}
-         * @memberof Component
-         */
-        public tag: string = "default";
 
         public constructor() { super(); }
 
