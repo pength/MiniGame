@@ -1,14 +1,16 @@
 module MeltEngine {
 
-    export class TLevel extends Level {
+    export class TLevel extends Base.Level {
 
-        public mScene: THREE.Scene = undefined;
+        public static mScene: THREE.Scene = undefined;
 
         constructor() { super(); }
 
-        public init() {
+        public Awake() {
+            super.Awake();
+            Base.Level.main = this;
 
-            this.mScene = new THREE.Scene();
+            TLevel.mScene = new THREE.Scene();
 
             var path = './res/scene/cube/';
             var format = '.jpg';
@@ -17,22 +19,31 @@ module MeltEngine {
                 path + 'py' + format, path + 'ny' + format,
                 path + 'pz' + format, path + 'nz' + format
             ]);
-            this.mScene.background = envMap;
-            let loader = new THREE.GLTFLoader();
-            loader.load("./res/scene/scene02/scence.gltf", this.onLoaded.bind(this));
-            loader.load("./res/player/player/mota_p01.gltf", this.onLoaded.bind(this));
+            TLevel.mScene.background = envMap;
+        }
+
+        createScene(level_path: string) {
+            super.createScene(level_path);
+
+            
+
 
         }
+
 
         private onLoaded(gltf) {
             let obj = gltf.scene as THREE.Object3D;
-
-            this.mScene.add(obj);
+            TLevel.mScene.add(obj);
         }
+
+        addChild(..._child: any[])  {
+           // TLevel.mScene.add();
+        }
+
         // privaet mixer:THREE.AnimationMixer;
         // private _onLoaded(gltf) {
         //     let obj = gltf.scene as THREE.Object3D;
-
+            
         //     this.mScene.add(obj);
 
         //     this.mixer = new THREE.AnimationMixer( obj );

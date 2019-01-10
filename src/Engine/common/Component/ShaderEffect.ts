@@ -1,30 +1,57 @@
 module MeltEngine {
 
-    export class ShaderEffect extends Component {
+    export class ShaderEffect extends Base.Component {
       /*-----------------------------------------------------------------------------------------
         |   |   |   |   |   |   |   |   |   Shader 实现的效果
         -----------------------------------------------------------------------------------------*/
-        //淡入 
+        
+        /**
+         * 淡入
+         * @param {number} fTime 
+         * @memberof ShaderEffect
+         */
         FadeIn(fTime: number): void  {
 
         }
-        //淡出
+        
+        /**
+         * 淡出
+         * @param {number} fTime 
+         * @memberof ShaderEffect
+         */
         FadeOut(fTime: number): void  {
 
         }
 
-        //设置被鼠标选中状态
-        SetMouseHover(bHover: boolean, vColor: Vector3, crisperdingWidth?: number): void  {
+        /**
+         * 被鼠标选中状态
+         * @param {boolean} bHover 
+         * @param {Vector3} vColor 
+         * @param {number} [crisperdingWidth] 
+         * @memberof ShaderEffect
+         */
+        SetMouseHover(bHover: boolean, vColor: Base.Vector3, crisperdingWidth?: number): void  {
 
         }
         
-        //设置被击中的颜色
-        SetHitColor(vColor: Vector3, fTime?: number): void  {
+        /**
+         * 被击中的颜色
+         * @param {Vector3} vColor 
+         * @param {number} [fTime] 
+         * @memberof ShaderEffect
+         */
+        SetHitColor(vColor: Base.Vector3, fTime?: number): void  {
 
         }
 
-        //设置边缘光颜色
-        SetEdgeColor(vColor: Vector3, fTime: number, power?: number): void  {
+        /**
+         * 边缘光颜色
+         * @param {Vector3} vColor 
+         * @param {number} fTime 
+         * @param {number} [power] 
+         * @memberof ShaderEffect
+         */
+        SetEdgeColor(vColor: Base.Vector3, fTime: number, power?: number): void  {
 
         }
     }

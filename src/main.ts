@@ -1,19 +1,26 @@
 // 程序入口
 class Main {
-    private mApp:MeltEngine.IApplication = undefined;
+
+    public engine: MeltEngine.IApplication = undefined;
     private mFrameLoop: any = undefined;
+
     constructor() {
         //初始化微信小游戏
         //Laya.MiniAdpter.init();
         this.init();
         this._init();
+
+        //窗口变化
+        window.addEventListener('resize', this.Resize.bind(this), false);
     }
 
     //程序入口
     init() {
 
         //初始化引擎
-        this.mApp = MeltEngine.Engine_Init();
+        this.engine = MeltEngine.Engine_Init();
+        this.engine.Resize();
+
         UI.Instance.init();
         Logic.Instance.init();
 
@@ -22,36 +29,30 @@ class Main {
     _init() {
         this.mFrameLoop = this.frameLoop.bind(this);
         window.requestAnimationFrame(this.mFrameLoop);
-
-        window.addEventListener('resize', this.onWindowResize.bind(this), false);
     }
 
     unInit() {
 
-        MeltEngine.Engine_UnInit(this.mApp);
+        MeltEngine.Engine_UnInit(this.engine);
     }
 
-    private onWindowResize() {
-
-        let width = window.innerWidth;
-        let height = window.innerHeight;
-
-
-        this.mApp.Resize(width, height);
+    Resize() {
+        this.engine.Resize();
     }
 
     private frameLoop() {
 
-        //逻辑更新操作
-        this.mApp.Update(0.1);
         UI.Instance.init();
         Logic.Instance.init();
 
+        //逻辑更新操作
+        this.engine.Update(0.1);
         //渲染操作
-        this.mApp.Render();
+        this.engine.Render();
 
         window.requestAnimationFrame(this.mFrameLoop);
     }
+
 }
 
-new Main();
+let g_app = new Main();

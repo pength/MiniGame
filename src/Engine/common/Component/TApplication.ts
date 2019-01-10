@@ -1,38 +1,44 @@
 module MeltEngine {
 
-    export class TApplication extends Application {
+    /**
+     * 游戏总类
+     * @export
+     * @class TApplication
+     * @extends {BaseApplication}
+     */
+    export class TApplication extends Base.Application {
 
         private mRender: THREE.WebGLRenderer = undefined;
         private mLight: THREE.HemisphereLight = undefined;
-        private mOrbitControls: THREE.OrbitControls = undefined;
-
-        public mTCamera: TCamera = undefined;
-        public mTLevel: TLevel = undefined;
 
         constructor() { super(); }
+
+        Register() {
+            super.Register();
+
+            Base.RegisterClass[Base.ObjectType.OT_CAMERA] = TCamera;
+            Base.RegisterClass[Base.ObjectType.OT_LEVEL] = TLevel;
+
+        }
 
         public Init() {
 
             if (this.mInitFlag == true)
                 return;
 
+            this.Register();
             super.Init();
 
-            this.mTLevel = this.mLevel as TLevel;
-            this.mTLevel.init();
-            this.mTCamera = this.mCamera as TCamera;
-            this.mTCamera.init();
             this.mRender = new THREE.WebGLRenderer();
+            document.body.appendChild(this.mRender.domElement);
 
             this.mLight = new THREE.HemisphereLight(0xbbbbff, 0x444422);
             this.mLight.position.set(0, 1, 0);
-            this.mTLevel.mScene.add(this.mLight);
 
-            this.mOrbitControls = new THREE.OrbitControls(this.mTCamera.mCamera, this.mRender.domElement);
-            this.mOrbitControls.target.set(0, -0.2, -0.2);
+            Base.Level.main.addChild(this.mLight);
 
-            document.body.appendChild(this.mRender.domElement);
-            this.Resize(1024,768);
+            TLevel.main.createScene("");
+
             this.mInitFlag = true;
         }
 
@@ -46,32 +52,28 @@ module MeltEngine {
         }
 
         public Resize(width: number, height: number) {
-            this.mTCamera.mCamera.updateProjectionMatrix();
-            this.mTCamera.mCamera.aspect = width / height;
+            super.Resize(width, height);
 
             if (this.mRender)
-                this.mRender.setSize(width, height);
+                this.mRender.setSize(this.width, this.height);
         }
 
         public Update(fDeltaTime: number) {
 
             super.Update(fDeltaTime);
-            this.mOrbitControls.update();
-
-
-
 
         }
 
         Render(): void {
-            this.mRender.render(this.mTLevel.mScene, this.mTCamera.mCamera);
+
+            this.mRender.render(TLevel.mScene, TCamera.mCamera);
         }
     }
 }
 
 MeltEngine.Engine_Init = function (): MeltEngine.IApplication {
     let app = new MeltEngine.TApplication();
-    app.Init()
+    app.Init();
     return app;
 }
 
